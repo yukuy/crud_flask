@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Editar Usuario</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Editar Usuario</h1>
+        <form method="post" enctype="multipart/form-data">
+            <label>Nombre:</label><input type="text" name="nombre" value="{{ user.nombre }}" required><br>
+            <label>Correo:</label><input type="email" name="correo" value="{{ user.correo }}" required><br>
+            <label>Clave:</label><input type="password" name="clave" value="{{ user.clave }}" required><br>
+            <label>Foto:</label><input type="file" name="foto" accept="image/*"><br>
+            {% if user.foto %}
+                <img src="{{ url_for('static', filename='uploads/' ~ user.foto) }}" alt="Foto de {{ user.nombre }}" width="100"><br>
+            {% endif %}
+            <button type="submit">Actualizar</button>
+        </form>
+        <a href="{{ url_for('index') }}">Volver a la lista de usuarios</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Usuarios</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="welcome">
+            <h1>Bienvenido, {{ user.nombre }}</h1>
+            <a href="{{ url_for('logout') }}">Cerrar sesión</a>
+        </div>
+        <h2>Usuarios Registrados</h2>
+        <a href="{{ url_for('add_user') }}" class="button">Agregar Nuevo Usuario</a>
+        <table >
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Foto</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.nombre }}</td>
+                    <td>{{ user.correo }}</td>
+                    <td>
+                        {% if user.foto %}
+                            <img src="{{ url_for('static', filename='uploads/' ~ user.foto) }}" 
+                            alt="Foto de {{ user.nombre }}" width="100">
+                        {% else %}
+                            No disponible
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ url_for('edit_user', id=user.id) }}" >Editar</a> |
+                        <a href="{{ url_for('delete_user', id=user.id) }}" onclick="return confirm('¿Estás seguro de que deseas eliminar este usuario?');">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
